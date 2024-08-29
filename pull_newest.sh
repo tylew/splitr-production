@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Define the project directory
-PROJECT_DIR="/path/to/my_c_project"
+# Define the project directory as location of this script
+PROJECT_DIR=$(dirname "$(readlink -f "$0")")
 
 # Navigate to the project directory
 cd $PROJECT_DIR
@@ -14,7 +14,7 @@ fi
 
 # Pull the latest changes from the repository
 echo "Pulling the latest changes from the Git repository..."
-git pull origin main
+git pull origin master
 
 # Check if git pull was successful
 if [ $? -ne 0 ]; then
@@ -22,14 +22,4 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-# Build the project using the Makefile
-echo "Building the project..."
-make all
-
-# Check if make was successful
-if [ $? -ne 0 ]; then
-    echo "Build failed. Please check the compilation errors."
-    exit 1
-fi
-
-echo "Build completed successfully."
+echo "Git pull completed successfully."

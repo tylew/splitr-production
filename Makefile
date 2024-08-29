@@ -1,17 +1,18 @@
 CC=gcc
 CFLAGS=-Iinclude
-DEPS = $(wildcard include/*.h)
-OBJ = $(patsubst %,src/%,$(OBJ_NAMES))
+LDFLAGS=-lbluetooth
 
-OBJ_NAMES = main.o
+SRC = src/main.c src/utils.c
+OBJ = $(SRC:.c=.o)
+EXECUTABLE=production
 
-%.o: %.c $(DEPS)
-	$(CC) -c -o $@ $< $(CFLAGS)
+all: $(EXECUTABLE)
 
-all: myproject
+$(EXECUTABLE): $(OBJ)
+	$(CC) -o $@ $^ $(LDFLAGS)  # Make sure this line starts with a tab
 
-myproject: $(OBJ)
-	$(CC) -o $@ $^ $(CFLAGS) -lbluetooth
+%.o: %.c
+	$(CC) -c $< -o $@ $(CFLAGS)  # And this line too
 
 clean:
-	rm -f src/*.o *~ core myproject
+	rm -f src/*.o $(EXECUTABLE)  # And this line as well

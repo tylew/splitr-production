@@ -13,11 +13,12 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Set up working directory
-WORKDIR /my_c_project
+WORKDIR /production
 
 # Copy your source and header files into the Docker image
-COPY src/* /my_c_project/src/
-COPY include/* /my_c_project/include/
+COPY src/* /production/src/
+COPY include/* /production/include/
+COPY Makefile /production/
 
 # Set the default command to compile the code
-CMD ["make", "all"]
+CMD make all && ./production
